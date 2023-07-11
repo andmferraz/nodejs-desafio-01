@@ -19,6 +19,20 @@ export class Database {
         fs.writeFile(databasePath, JSON.stringify(this.#database))
     }
 
+    select(table, filter) {
+        let data = this.#database[table] ?? []
+
+        if(filter) {
+            data = data.filter(row => {
+                return Object.entries(filter).some(([key, value]) => {
+                    return row[key].toLowerCase().includes(value.toLowerCase())
+                })
+            })
+        }
+
+        return data
+    }
+
     insert(table, data)
     {
         if(Array.isArray(this.#database[table])) {
