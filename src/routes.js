@@ -48,12 +48,12 @@ export const routes = [
             const { id } = req.params
             const { title, description } = req.body
 
-            if(database.find('tasks', id)) {
-                return res.writeHead(404).end()
+            if(database.find('tasks', id)) {            
+                return res.writeHead(404).end(JSON.stringify('Register not found'))
             }
             
             if(!database.update('tasks', id, { title, description })) {
-                return res.writeHead(400).end()
+                return res.writeHead(400).end()                
             }
 
             return res.writeHead(204).end()
@@ -65,8 +65,8 @@ export const routes = [
         handler: (req, res) => {
             const { id } = req.params
 
-            if(database.find('tasks', id)) {
-                return res.writeHead(404).end()
+            if(database.find('tasks', id)) {                
+                return res.writeHead(404).end(JSON.stringify('Register not found'))
             }
 
             database.delete('tasks', id)
@@ -80,8 +80,8 @@ export const routes = [
         handler: (req, res) => {            
             const { id } = req.params
 
-            if(database.find('tasks', id)) {
-                return res.writeHead(404).end()
+            if(database.find('tasks', id)) {                
+                return res.writeHead(404).end(JSON.stringify('Register not found'))
             }
 
             database.complete('tasks', id)
