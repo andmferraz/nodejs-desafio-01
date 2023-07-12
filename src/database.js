@@ -35,15 +35,23 @@ export class Database {
 
     insert(table, data)
     {
-        if(Array.isArray(this.#database[table])) {
-            this.#database[table].push(data)
+        let result = true
+
+        let { title, description } = data
+
+        if(!title || !description) {
+            result = false
         } else {
-            this.#database[table] = []
+            if(Array.isArray(this.#database[table])) {
+                this.#database[table].push(data)
+            } else {
+                this.#database[table] = []
+            }
+    
+            this.#persist()    
         }
 
-        this.#persist()
-
-        return data
+        return result
     }
 
     update(table, id, data) {

@@ -34,7 +34,9 @@ export const routes = [
                 updated_at: null
             }
 
-            database.insert('tasks', task)
+            if(!database.insert('tasks', task)) {
+                return res.writeHead(400).end()
+            }
 
             return res.writeHead(201).end()
         }
