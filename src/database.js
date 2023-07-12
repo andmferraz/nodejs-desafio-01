@@ -97,4 +97,23 @@ export class Database {
             this.#persist()
         }
     }
+
+    complete(table, id) {
+        const rowIndex = this.#database[table].findIndex(row => row.id === id)
+        
+        const { title, description, completed_at, created_at, updated_at } = this.#database[table][rowIndex]
+
+        if(rowIndex > -1) {            
+            this.#database[table][rowIndex] = { 
+                id,
+                title,
+                description,
+                completed_at: completed_at ? null : new Date().toLocaleDateString(),
+                created_at,
+                updated_at
+            }
+            
+            this.#persist()
+        }
+    }
 }
