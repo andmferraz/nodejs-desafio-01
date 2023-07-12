@@ -31,7 +31,7 @@ export const routes = [
                 description,
                 completed_at: null,
                 created_at: new Date().toLocaleDateString(),
-                updated_at: new Date().toLocaleDateString()
+                updated_at: null
             }
 
             database.insert('tasks', task)
@@ -43,7 +43,18 @@ export const routes = [
         method: 'PUT',
         path: buildRoutePath('/tasks/:id'),
         handler: (req, res) => {            
-            return res.end('PUT')
+            const { id } = req.params
+            const { title, description } = req.body
+
+            if(database.find('tasks', id)) {
+                return res.writeHead(404).end()
+            }
+            
+            if(!database.update('tasks', id, { title, description })) {
+                return res.writeHead(400).end()
+            }
+
+            return res.writeHead(204).end()
         }
     },
     {
